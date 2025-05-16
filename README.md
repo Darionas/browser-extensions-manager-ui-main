@@ -22,10 +22,10 @@
 ## Plan workflow
 
 - [x] Create of repo (1st task)
-- [ ] Create utility classes and custom properties (css design system)(2nd task)
+- [x] Create utility classes and custom properties (css design system)(2nd task)
 - [ ] Create HTML layout (3rd task)
-- [ ] Create CSS layout according style guides (4th task)
-- [ ] Create grid layout for mobile first (5th task)
-- [ ] Craete grid layout for desktop (6th task)
+- [ ] Create CSS layout for mobile first (4th task)
+- [ ] Create CSS layout for tablet (5th task)
+- [ ] Craete CSS layout for desktop (6th task)
 - [ ] Implement JavaScript (7th task)
 - [ ] Tada it is done. Congratulation you reach your goal 🎉🎉🎉
