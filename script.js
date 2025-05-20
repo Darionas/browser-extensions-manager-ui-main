@@ -60,3 +60,14 @@ filterTab.addEventListener('click', (e) => {
     e.target.classList.add('defaultActiveTab');
 })
 
+/* Extension toggling */
+const extensionInputs = document.querySelectorAll('.switch input[type="checkbox"]');
+
+extensionInputs.forEach((input) => {
+    input.addEventListener('change', () => {
+        input.setAttribute('aria-checked', input.checked.toString());
+        input.setAttribute('aria-label', input.checked ? 'Disable extension' : 'Enable extension');
+    });
+});
+
+

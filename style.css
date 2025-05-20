@@ -100,6 +100,21 @@
     border: 0;
   }
   
+  .skip-to-content {
+      position: absolute;
+      background-color: hsl(var(--clr-white));
+      color: hsl(var(--clr-dark));
+      padding: .5em 1em;
+      margin-inline: auto;
+      z-index: 1900;
+      transform: translateY(-100%);
+      transition: transform 250ms ease-in-out;
+  }
+  
+  .skip-to-content:focus {
+      transform: translateY(0);
+  }
+  
   
  /* Colors */
  
@@ -149,6 +164,7 @@ body {
     line-height: var(--lh-14);
     letter-spacing: var(--ls-05);
     background-image: var(--background);
+    border: 1px solid green;
 }
 
 /* ------------------ */
@@ -181,7 +197,8 @@ body {
   height: 0;
 }
 
-/* The slider */
+/* The slider container*/
+/* 1.1. default; false */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -194,9 +211,9 @@ body {
   background-color: hsl(var(--clr-neutral-300)); /* #ccc; *//* mano */
   -webkit-transition: .4s;
   transition: .4s;
-  /* box-sizing: border-box; */
 }
 
+/* Oval slider */
 .slider:before {
   position: absolute;
   content: "";
@@ -205,35 +222,35 @@ body {
   left: 0.14rem; /* 4px; */ /* mano */
   bottom: 0.14rem; /* 4px; */ /* mano */
   background-color: hsl(200 60% 99%); /* white *//* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
+  box-shadow: 
+      0 1px 3px 0 hsla(218, 29%, 5%, 0.15),
+      0 1px 2px -1px hsla(218, 29%, 5%, 0.15);
   -webkit-transition: .4s;
   transition: .4s;
-  /* box-sizing: border-box; */
 }
 
-input:not(:checked) + .slider {
-  background-color: hsl(var(--clr-neutral-300)); /* #2196F3 */ /* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
-}
-
+/* 1.2. default; true */
 input:checked + .slider {
   background-color: hsl(var(--clr-red-700)); /* #2196F3 */ /* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
 }
 
-input:hover:not(:checked) + .slider {
-  background-color: hsl(var(--clr-neutral-300)); /* #2196F3 */ /* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
+input:checked + .slider:before {
+  box-shadow: 
+      0 1px 3px 0 hsla(218, 29%, 5%, 0.3),
+      0 1px 2px -1px hsla(218, 29%, 5%, 0.3);
 }
 
+/* 2.1. hover; false - no need to set, the same as default, false */
+/* input:hover:not(:checked) + .slider {
+  background-color: hsl(var(--clr-neutral-300));*/ /* #2196F3 */ /* mano */
+  /*box-shadow: 
+      0 1px 3px 0 hsla(218, 29%, 5%, 0.15),
+      0 1px 2px -1px hsla(218, 29%, 5%, 0.15);
+} */
+
+/* 2.2. hover; true; */
 input:hover:checked + .slider {
   background-color: hsl(var(--clr-red-500)); /* #2196F3 */ /* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
 }
 
 
@@ -246,30 +263,35 @@ appears that wasn't there before, it increases the button's size, pushing surrou
 elements or changing layout. To prevent this layout shift, there are a clean solution: 
     Use box-shadow to simulate a border/outline. It doesn't affect the element's size or layout.
     box-shadow is rendered outside the element's box, so it won't push other content around.*/
+/* 3.1. focus; false*/
 input:focus-visible:not(:checked) + .slider { 
-    background-color: hsl(var(--clr-neutral-300));
     box-shadow: 
         0 0 0 2px hsl(var(--clr-neutral-0)),
         0 0 0 4px hsl(var(--clr-red-400));
-    /* border: 1px solid #FFF;
-    outline: 1px solid hsl(var(--clr-red-400));
-    outline-offset: 1px; */
 }
 
+/* 3.2. focus; true */
 input:focus-visible:checked + .slider { 
     background-color: hsl(var(--clr-red-700));
     box-shadow: 
         0 0 0 2px hsl(var(--clr-neutral-0)),
         0 0 0 4px hsl(var(--clr-red-400));
-    /* border: 1px solid #FFF;
-    outline: 1px solid hsl(var(--clr-red-400));
-    outline-offset: 1px; */
 }
 
-input:disabled + .slider {
+/* disabled; false */
+input:disabled:not(:checked) + .slider {
   background-color: hsl(var(--clr-neutral-100)); /* #2196F3 */ /* mano */
-  box-shadow: 0 1px 3px 0 hsla(218, 29%, 5%, 0.15); /* mano */
-  box-shadow: 0 1px 2px -1px hsla(218, 29%, 5%, 0.15); /* mano */
+}
+
+input:disabled + .slider:before {
+  box-shadow: 
+      0 1px 3px 0 hsla(218, 29%, 5%, 0.15),
+      0 1px 2px -1px hsla(218, 29%, 5%, 0.15);
+}
+
+/* disabled; true */
+input:disabled:checked + .slider {
+  background-color: hsl(var(--clr-neutral-100)); /* #2196F3 */ /* mano */
 }
 
 input:checked + .slider:before {
@@ -287,14 +309,15 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Dark-Light mode */
+/* Dark-Light mode toggling button */
+/* light default */
 #darkMode-toggle {
    cursor: pointer;
-   height: 1.8rem;
-   width: 1.8rem;
+   height: 3.2rem;
+   width: 3.2rem;
    padding: 0.5rem;
    border: none;
-   border-radius: 0.3rem;
+   border-radius: 0.75rem;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -302,10 +325,6 @@ input:checked + .slider:before {
    /* position: fixed;
    top: 2.5rem;
    right: 2.5rem; */
-}
-
-.darkMode #darkMode-toggle {
-   background-color: hsl(var(--clr-neutral-700));
 }
 
 #darkMode-toggle svg:last-child {
@@ -320,79 +339,131 @@ input:checked + .slider:before {
     display: block;
 }
 
+/* light focus */
+#darkMode-toggle:focus-visible {
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-0)),
+        0 0 0 4px hsl(var(--clr-red-400));
+    outline: none;
+}
+
+/* light hover */
+#darkMode-toggle:hover {
+    background-color: hsl(var(--clr-neutral-300));
+}
+
+/* dark default */
+.darkMode #darkMode-toggle {
+   background-color: hsl(var(--clr-neutral-700));
+}
+
+/* dark focus */
+.darkMode #darkMode-toggle:focus-visible {
+    background-color: hsl(var(--clr-neutral-700));
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-0)),
+        0 0 0 4px hsl(var(--clr-red-400));
+    outline: none;
+}
+
+/* dark hover */
+.darkMode #darkMode-toggle:hover {
+    background-color: hsl(var(--clr-neutral-300));
+}
+
 /* Filter tab */
 /* Light mode */
+/* default default */
 .filterTab {
     cursor: pointer;
     padding: 0.5rem 1.25rem;
     border-radius: 999px;
-    border: 1px solid hsl(var(--clr-neutral-200));
-    background-color: hsl(var(--clr-neutral-0));
-}
-
-.defaultActiveTab {
-    background-color: hsl(var(--clr-red-700));
-    color: hsl(var(--clr-neutral-0));
-    border: none;
-}
-
-.defaultActiveTab:hover {
-    background-color: hsl(var(--clr-red-500));
-    border: none;
-}
-
-.defaultActiveTab:focus-visible {
-    background-color: hsl(var(--clr-red-700));
-    color: hsl(var(--clr-neutral-0));
-    border: 2px solid hsl(var(--clr-neutral-0));
-    outline: 2px solid hsl(var(--clr-red-400));
-    /* transform: scale(0.95);
-    box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.2); */
-}
-
-.filterTab:not(.defaultActiveTab):focus-visible {
     border: 2px solid hsl(var(--clr-neutral-200));
-    outline: 2px solid hsl(var(--clr-red-400));
     background-color: hsl(var(--clr-neutral-0));
+}
+
+/* default active */
+.filterTab[aria-selected="true"] {
+    color: hsl(var(--clr-neutral-0));
+    border: 2px solid hsl(var(--clr-red-700));
+    background-color: hsl(var(--clr-red-700));    
+}
+
+/* hover active */
+.filterTab[aria-selected="true"]:hover {
+    border: 2px solid hsl(var(--clr-red-500));
+    background-color: hsl(var(--clr-red-500));
+}
+
+/* focus default */
+.filterTab[aria-selected="false"]:focus-visible {
+    border: 2px solid hsl(var(--clr-neutral-0));
+    background-color: hsl(var(--clr-neutral-0));
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-200)),
+        0 0 0 4px hsl(var(--clr-red-400));
+    outline: none;
+}
+
+/* focus active */
+.filterTab[aria-selected="true"]:focus-visible {
+    color: hsl(var(--clr-neutral-0));
+    border: 2px solid hsl(var(--clr-red-700));
+    background-color: hsl(var(--clr-red-700));
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-0)),
+        0 0 0 4px hsl(var(--clr-red-400));
+    outline: none;
 }
 
 /* darkMode */
+/* default default */
 .darkMode .filterTab {
     color: hsl(var(--clr-neutral-900));
     border: 2px solid hsl(var(--clr-neutral-300));
     background-color: hsl(var(--clr-neutral-700));
 }
 
-.darkMode .filterTab:hover {
-    color: hsl(var(--clr-neutral-900));
+/* default active */
+.darkMode .filterTab[aria-selected="true"] {
+    color: hsl(var(--clr-neutral-0));
+    border: 2px solid hsl(var(--clr-red-400));
+    background-color: hsl(var(--clr-red-400));
+}
+
+/* hover default */
+.darkMode .filterTab[aria-selected="false"]:hover {
+    /* color: hsl(var(--clr-neutral-900)); */
     border: 2px solid hsl(var(--clr-neutral-300));
     background-color: hsl(var(--clr-neutral-300));
 }
 
-.darkMode .defaultActiveTab {
-    background-color: hsl(var(--clr-red-400));
+/* hover active */
+.darkMode .filterTab[aria-selected="true"]:hover {
     color: hsl(var(--clr-neutral-0));
-    border: none;
-}
-
-.darkMode .defaultActiveTab:hover {
+    border: 2px solid hsl(var(--clr-red-500));
     background-color: hsl(var(--clr-red-500));
-    color: hsl(var(--clr-neutral-0));
-    border: none;
 }
 
-.darkMode .defaultActiveTab:focus-visible {
-    background-color: hsl(var(--clr-red-700));
-    color: hsl(var(--clr-neutral-0));
-    border: 2px solid hsl(var(--clr-neutral-0));
-    outline: 2px solid hsl(var(--clr-red-400));
-}
-
-.darkMode .filterTab:not(.defaultActiveTab):focus-visible {
-    border: 2px solid hsl(var(--clr-neutral-0));
-    outline: 2px solid hsl(var(--clr-red-400));
+/* focus default */
+.darkMode .filterTab[aria-selected="false"]:focus-visible {
+    border: 2px solid hsl(var(--clr-neutral-700));
     background-color: hsl(var(--clr-neutral-700));
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-0)),
+        0 0 0 4px hsl(var(--clr-red-400));
 }
+
+/* focus active */
+.darkMode .filterTab[aria-selected="true"]:focus-visible {
+    color: hsl(var(--clr-neutral-0));
+    border: 2px solid hsl(var(--clr-red-400));
+    background-color: hsl(var(--clr-red-400));
+    box-shadow: 
+        0 0 0 2px hsl(var(--clr-neutral-0)),
+        0 0 0 4px hsl(var(--clr-red-400));
+}
+
 
 /* Remove button */
 /* Light mode */
@@ -418,19 +489,19 @@ input:checked + .slider:before {
 }
 
 /* darkMode */
-.darkMode .removeBtn {
+.darkMode.removeBtn {
     color: hsl(var(--clr-neutral-900));
     border: 2px solid hsl(var(--clr-neutral-300));
     background-color: hsl(var(--clr-neutral-0));
 }
 
-.darkMode .removeBtn:hover {
+.darkMode.removeBtn:hover {
     color: hsl(var(--clr-neutral-0));
     background-color: hsl(var(--clr-red-700));
     border: 2px solid hsl(var(--clr-red-700));
 }
 
-.darkMode .removeBtn:focus-visible {
+.darkMode.removeBtn:focus-visible {
     background-color: hsl(var(--clr-neutral-700));
     color: hsl(var(--clr-neutral-900));
     border: 2px solid hsl(var(--clr-neutral-0));
@@ -495,5 +566,45 @@ input:checked + .slider:before {
     justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
+}
+
+/* -------------------- */
+/* Layout */
+/* -------------------- */
+.container {
+    padding: 1.25rem 1rem 4rem 1rem;
+    margin-inline: auto;
+    max-width: 73rem;
+    border: 1px solid red;
+}
+
+header {
+    padding: 0.5rem 0.75rem;
+    gap: auto;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid hsl(var(--clr-neutral-200));
+    border-radius: 0.6rem;
+    background-color: hsl(var(--clr-neutral-0));
+}
+/* Sometimes, SVGs have extra space due to their viewBox or internal alignment.*/
+header > div svg {
+    vertical-align: middle; /* Add this to your CSS to center svg */
+}
+
+.control {
+    margin-block: 2.5rem;
+    justify-items: center;
+    gap: 1.5rem;
+    /* border: 1px solid green; */
+}
+
+nav > div {
+    gap: 0.75rem;
+}
+
+
+footer {
+    margin-inline: auto;
 }
 
